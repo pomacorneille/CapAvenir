@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CapAvenir RDC — Orientation Post-Bac</title>
+<meta name="description" content="CapAvenir RDC accompagne les jeunes dans leur orientation post-bac, la découverte des filières, des universités et des instituts.">
+<style>
+:root{--blue:#007FFF;--blue-dark:#003B7A;--red:#CE1021;--yellow:#F7D618;--dark:#101828;--text:#344054;--muted:#667085;--bg:#F5F8FC;--white:#FFFFFF;--border:#E4E7EC;--green:#00A86B;--shadow:0 12px 35px rgba(16,24,40,.08);--radius:20px;--flag:linear-gradient(90deg,var(--blue) 0 60%,var(--red) 60% 80%,var(--yellow) 80%)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Inter,"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#F7FAFF,#FFFFFF,#F4F8FD);color:var(--text)}
+body::before{content:"";position:fixed;top:0;left:0;width:100%;height:4px;z-index:9999;background:var(--flag)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(15px);border-bottom:1px solid var(--border)}
+header::after{content:"";display:block;height:3px;background:var(--flag)}
+.header-container{max-width:1250px;margin:auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;font-size:22px;font-weight:900;color:var(--blue-dark)}
+.logo-mark{width:47px;height:47px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;background:linear-gradient(135deg,var(--blue) 0 62%,var(--red) 62% 82%,var(--yellow) 82%);box-shadow:0 8px 25px rgba(0,127,255,.25)}
+.logo small{display:block;font-size:9px;letter-spacing:1.5px;color:var(--muted)}
+nav{display:flex;align-items:center;gap:5px}
+nav button{border:0;background:transparent;padding:10px 12px;border-radius:10px;color:#475467;font-weight:700;transition:.2s}
+nav button:hover{color:var(--blue);background:#EEF6FF}
+.menu-btn{display:none;border:0;width:44px;height:44px;border-radius:12px;background:var(--blue);color:#fff;font-size:22px}
+
+/* PAGES */
+.page{display:none;max-width:1250px;margin:auto;padding:55px 22px}
+.page.active{display:block}
+
+/* HERO */
+.hero{min-height:600px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:50px}
+.badge{display:inline-flex;padding:8px 14px;border-radius:30px;background:#EEF6FF;color:var(--blue);border-left:4px solid var(--red);font-size:12px;font-weight:900;margin-bottom:18px}
+.hero h1{font-size:clamp(43px,6vw,72px);line-height:1.02;letter-spacing:-3px;color:var(--dark)}
+.hero h1 span{color:var(--blue)}
+.hero h1 .rdc{color:var(--red)}
+.hero p{max-width:650px;margin:25px 0;font-size:18px;line-height:1.8;color:var(--muted)}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:12px}
+
+/* BUTTONS */
+.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{color:#fff;background:linear-gradient(135deg,var(--blue),#0065C8);box-shadow:0 8px 20px rgba(0,127,255,.25)}
+.btn-red{color:#fff;background:linear-gradient(135deg,var(--red),#A90919)}
+.btn-yellow{color:#111;background:var(--yellow)}
+.btn-white{color:var(--dark);background:#fff;border:1px solid var(--border)}
+
+/* HERO CARD */
+.hero-card{position:relative;min-height:440px;padding:35px;overflow:hidden;border-radius:35px;color:#fff;background:linear-gradient(145deg,var(--blue-dark),var(--blue));box-shadow:0 25px 60px rgba(0,59,122,.25)}
+.hero-card::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-100px;top:-100px;background:var(--yellow)}
+.hero-card::after{content:"";position:absolute;width:200px;height:200px;border-radius:50%;left:-100px;bottom:-100px;background:var(--red)}
+.hero-card-content{position:relative;z-index:2}
+.hero-card h2{font-size:30px;margin-bottom:15px}
+.hero-card p{color:#DCEEFF;line-height:1.6;margin-bottom:25px}
+.stat{display:flex;justify-content:space-between;align-items:center;padding:17px;margin:12px 0;border-radius:15px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.stat strong{color:var(--yellow);font-size:25px}
+
+/* SECTIONS */
+.section-head{margin-bottom:35px}
+.section-head h2{color:var(--dark);font-size:38px;margin-bottom:10px}
+.section-head p{color:var(--muted);line-height:1.7}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{position:relative;background:#fff;padding:25px;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:var(--flag)}
+.card h3{color:var(--dark);margin-bottom:10px}
+.card p{color:var(--muted);line-height:1.6}
+
+/* TEST */
+.test-container{max-width:850px;margin:auto}
+.progress{height:10px;background:#E5E7EB;border-radius:20px;overflow:hidden;margin-bottom:25px}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--red),var(--yellow));transition:.3s}
+.question-card{background:#fff;padding:35px;border-radius:25px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.question-number{color:var(--red);font-weight:900;margin-bottom:12px}
+.question-card h2{color:var(--dark);font-size:27px;margin-bottom:25px}
+.answers{display:grid;gap:12px}
+.answer{padding:17px;text-align:left;border:2px solid var(--border);border-radius:14px;background:#fff;font-weight:700;color:var(--text);transition:.2s}
+.answer:hover{border-color:var(--blue);background:#EEF6FF}
+.answer.selected{border-color:var(--blue);background:#E5F0FF;color:var(--blue-dark);box-shadow:0 0 0 3px rgba(0,127,255,.08)}
+.test-actions{display:flex;justify-content:space-between;margin-top:22px}
+
+/* RESULTAT */
+.result-card{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:40px;border-radius:28px;box-shadow:var(--shadow)}
+.result-card::after{content:"🇨🇩";position:absolute;right:20px;bottom:-30px;font-size:130px;opacity:.07}
+.result-card h2{font-size:38px;margin:10px 0}
+.score-circle{width:130px;height:130px;border-radius:50%;border:9px solid var(--yellow);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;margin:25px 0}
+.recommendations{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:25px 0}
+.rec{padding:18px;background:#fff;color:var(--dark);border-radius:15px;border-top:4px solid var(--red)}
+.rec strong{display:block;color:var(--blue);margin-bottom:5px}
+
+/* ORIENTATION */
+.orientation-header{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:30px;padding:40px;color:#fff;border-radius:28px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));box-shadow:0 20px 50px rgba(0,59,122,.2)}
+.orientation-header h1{font-size:38px;margin:10px 0}
+.orientation-header p{max-width:650px;color:#DCEEFF;line-height:1.6}
+.small-label{color:var(--yellow);font-size:11px;letter-spacing:2px;font-weight:900}
+.orientation-score{min-width:125px;height:125px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;color:var(--blue);border:9px solid var(--yellow);font-size:30px;font-weight:900}
+.orientation-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:22px 0}
+.skill{margin:13px 0}
+.skill-top{display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;font-weight:700}
+.skill-bar{height:8px;background:#E9EDF2;border-radius:20px;overflow:hidden}
+.skill-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--red))}
+.orientation-field{padding:13px;margin:9px 0;display:flex;align-items:center;gap:10px;border-radius:12px;border:1px solid var(--border);background:#FAFCFF}
+.empty{text-align:center;padding:40px;border-radius:20px;background:#fff;border:2px dashed rgba(0,127,255,.2);color:var(--muted)}
+.orientation-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+
+/* UNIVERSITES */
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;background:#fff;padding:20px;border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:25px}
+.input,select{width:100%;padding:13px 15px;border:1px solid var(--border);border-radius:11px;outline:none;background:#fff}
+.input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,127,255,.1)}
+.count{color:var(--muted);font-size:14px;font-weight:700;margin-bottom:15px}
+.university-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.university{overflow:hidden;background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);transition:.2s}
+.university:hover{transform:translateY(-5px);box-shadow:0 20px 45px rgba(16,24,40,.12)}
+.uni-cover{height:145px;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(135deg,var(--blue-dark),var(--blue))}
+.uni-cover.institut{background:linear-gradient(135deg,#7A0A15,var(--red))}
+.uni-cover.technique{background:linear-gradient(135deg,#0B5D3B,var(--green))}
+.uni-cover::before{content:"";position:absolute;top:0;left:0;width:55%;height:5px;background:var(--yellow)}
+.uni-cover::after{content:"RÉPUBLIQUE DÉMOCRATIQUE DU CONGO";position:absolute;bottom:10px;font-size:8px;letter-spacing:1px;color:rgba(255,255,255,.75)}
+.uni-logo{position:relative;z-index:2;min-width:85px;height:85px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:20px;background:#fff;border:4px solid var(--yellow);color:var(--blue-dark);font-size:19px;font-weight:900;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,.2)}
+.uni-content{padding:22px}
+.uni-content h3{color:var(--dark);margin-bottom:6px}
+.location{color:var(--muted);font-size:13px;margin-bottom:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.tag{padding:6px 9px;border-radius:20px;background:#EEF6FF;color:var(--blue-dark);font-size:11px;font-weight:700}
+.tag.type{background:#FFF4CC;color:#7A5B00}
+.uni-buttons{display:flex;gap:8px}
+.uni-buttons .btn{flex:1}
+
+/* FILIERES */
+.field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.field-card{position:relative;padding:25px;background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.field-card::before{content:"";position:absolute;top:0;left:0;width:6px;height:100%;background:var(--blue)}
+.field-card:nth-child(3n+2)::before{background:var(--red)}
+.field-card:nth-child(3n+3)::before{background:var(--yellow)}
+.field-card h3{color:var(--dark);margin-bottom:10px}
+.field-card p{color:var(--muted);line-height:1.6}
+.field-card .tags{margin:15px 0 0}
+.field-card button{margin-top:18px}
+
+/* IA */
+.ai-box{max-width:850px;margin:auto}
+.chat{height:450px;overflow-y:auto;padding:25px;background:#fff;border:1px solid var(--border);border-radius:25px;box-shadow:var(--shadow)}
+.message{max-width:80%;padding:14px 17px;margin-bottom:14px;border-radius:15px;line-height:1.6}
+.message.bot{color:#173B66;background:#EEF6FF;border-left:4px solid var(--blue)}
+.message.user{margin-left:auto;color:#fff;background:var(--blue);border-bottom-right-radius:4px}
+.chat-input{display:flex;gap:10px;margin-top:12px}
+.chat-input input{flex:1}
+
+/* PROFIL */
+.profile-box{max-width:700px;margin:auto;padding:30px;background:#fff;border-radius:25px;border-top:6px solid var(--blue);border-right:2px solid var(--red);box-shadow:var(--shadow)}
+.form-group{margin-bottom:17px}
+.form-group label{display:block;margin-bottom:7px;color:var(--dark);font-weight:800}
+
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.75)}
+.modal.show{display:flex}
+.modal-content{position:relative;width:100%;max-width:650px;max-height:90vh;overflow:auto;padding:30px;background:#fff;border-radius:25px;border-top:6px solid var(--blue)}
+.close{position:absolute;top:15px;right:15px;width:38px;height:38px;border:0;border-radius:50%;background:#F1F5F9;font-size:20px}
+
+/* FOOTER */
+footer{margin-top:30px;color:#fff;background:#061A33;border-top:5px solid var(--blue)}
+.footer-inner{max-width:1250px;margin:auto;padding:45px 22px;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:35px}
+footer h3{margin-bottom:13px}
+footer p,footer li{color:#AABBD0;font-size:14px;line-height:1.7}
+footer ul{list-style:none}
+.footer-bottom{padding:18px 22px;text-align:center;color:#8EA3BA;font-size:13px;border-top:1px solid rgba(255,255,255,.1)}
+
+/* RESPONSIVE */
+@media(max-width:950px){
+.menu-btn{display:block}
+nav{display:none;position:absolute;top:74px;left:15px;right:15px;flex-direction:column;padding:10px;background:#fff;border-radius:15px;box-shadow:var(--shadow)}
+nav.show{display:flex}
+nav button{width:100%;text-align:left}
+.hero{grid-template-columns:1fr}
+.cards,.university-grid,.field-grid{grid-template-columns:1fr 1fr}
+.filters{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+.page{padding:40px 15px}
+.hero{min-height:auto}
+.hero h1{font-size:45px;letter-spacing:-2px}
+.hero p{font-size:16px}
+.cards,.university-grid,.field-grid,.orientation-grid{grid-template-columns:1fr}
+.orientation-header{flex-direction:column;text-align:center;padding:30px 20px}
+.orientation-header h1{font-size:29px}
+.question-card{padding:23px}
+.recommendations{grid-template-columns:1fr}
+.footer-inner{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="header-container">
+<a href="#" class="logo" onclick="showPage('home');return false;">
+<div class="logo-mark">CA</div>
+<div>CapAvenir<small>ORIENTATION • RDC</small></div>
+</a>
+<button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+<nav id="nav">
+<button onclick="showPage('home')">Accueil</button>
+<button onclick="showPage('test')">Test</button>
+<button onclick="showPage('orientation')">Mon orientation</button>
+<button onclick="showPage('fields')">Filières</button>
+<button onclick="showPage('universities')">Universités</button>
+<button onclick="showPage('ai')">CapAvenir AI</button>
+<button onclick="showPage('profile')">👤 Profil</button>
+</nav>
+</div>
+</header>
+
+<!-- ACCUEIL -->
+<section id="home" class="page active">
+<div class="hero">
+<div>
+<span class="badge">🇨🇩 ORIENTATION DES JEUNES EN RDC</span>
+<h1>Construis ton <span>Avenir</span> en <span class="rdc">RDC.</span></h1>
+<p>CapAvenir t'accompagne dans ton orientation post-bac. Découvre ton profil, les filières qui correspondent à tes compétences et les universités, instituts supérieurs et instituts techniques où poursuivre tes études.</p>
+<div class="hero-buttons">
+<button class="btn btn-primary" onclick="showPage('test')">Commencer mon test</button>
+<button class="btn btn-white" onclick="showPage('universities')">Découvrir les établissements</button>
+</div>
+</div>
+<div class="hero-card">
+<div class="hero-card-content">
+<h2>Ton avenir commence aujourd'hui.</h2>
+<p>Quelques questions peuvent t'aider à mieux comprendre ton profil.</p>
+<div class="stat"><span>Questions</span><strong>10</strong></div>
+<div class="stat"><span>Domaines</span><strong>11</strong></div>
+<div class="stat"><span>Établissements</span><strong>25+</strong></div>
+</div>
+</div>
+</div>
+
+<div class="section-head">
+<span class="badge">COMMENT ÇA MARCHE ?</span>
+<h2>Une orientation en 3 étapes</h2>
+<p>Simple, rapide et pensée pour les étudiants congolais.</p>
+</div>
+<div class="cards">
+<div class="card"><h3>1. Fais le test</h3><p>Réponds aux questions pour découvrir ton domaine de prédilection.</p></div>
+<div class="card"><h3>2. Découvre tes filières</h3><p>CapAvenir te présente les filières qui correspondent à ton profil.</p></div>
+<div class="card"><h3>3. Explore les établissements</h3><p>Universités, instituts supérieurs et instituts techniques : trouve où poursuivre tes études.</p></div>
+</div>
+</section>
+
+<!-- TEST -->
+<section id="test" class="page">
+<div class="section-head">
+<span class="badge">TEST POST-BAC</span>
+<h2>Découvre ton orientation</h2>
+<p>Il n'y a pas de mauvaise réponse. Choisis ce qui te correspond réellement.</p>
+</div>
+<div class="test-container">
+<div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+<div class="question-card">
+<div id="questionNumber" class="question-number">Question 1 / 10</div>
+<h2 id="questionText">Chargement...</h2>
+<div id="answers" class="answers"></div>
+</div>
+<div class="test-actions">
+<button class="btn btn-white" onclick="previousQuestion()">Précédent</button>
+<button class="btn btn-primary" onclick="nextQuestion()">Suivant</button>
+</div>
+</div>
+</section>
+
+<!-- RESULTAT -->
+<section id="result" class="page">
+<div class="section-head">
+<span class="badge">TON RÉSULTAT</span>
+<h2>Résultat du test</h2>
+</div>
+<div class="result-card">
+<p>Ton domaine principal</p>
+<h2 id="resultDomain">--</h2>
+<p id="resultText">--</p>
+<div class="score-circle"><span id="resultScore">0%</span></div>
+<div id="recommendations" class="recommendations"></div>
+<button class="btn btn-yellow" onclick="showPage('orientation')">Voir mon orientation complète</button>
+</div>
+</section>
+
+<!-- ORIENTATION -->
+<section id="orientation" class="page">
+<div class="section-head">
+<span class="badge">MON ESPACE D'ORIENTATION</span>
+<h2>Mon orientation</h2>
+<p>Ton profil, tes compétences, tes filières et tes établissements recommandés.</p>
+</div>
+<div id="orientationContent"></div>
+</section>
+
+<!-- FILIERES -->
+<section id="fields" class="page">
+<div class="section-head">
+<span class="badge">FILIÈRES</span>
+<h2>Explore les domaines d'études</h2>
+<p>11 domaines et leurs filières pour t'aider à te retrouver. Clique sur un domaine pour voir les filières et les établissements qui le proposent.</p>
+</div>
+<div id="fieldGrid" class="field-grid"></div>
+</section>
+
+<!-- UNIVERSITES -->
+<section id="universities" class="page">
+<div class="section-head">
+<span class="badge">UNIVERSITÉS ET INSTITUTS DE RDC</span>
+<h2>Découvre les établissements</h2>
+<p>Recherche par nom, ville, type d'établissement ou domaine.</p>
+</div>
+<div class="filters">
+<input id="searchUniversity" class="input" placeholder="Rechercher (ex : ISTA, institut, technique)..." oninput="renderUniversities()">
+<select id="typeFilter" onchange="renderUniversities()">
+<option value="">Tous les types</option>
+<option>Université</option>
+<option>Institut supérieur</option>
+<option>Institut technique</option>
+</select>
+<select id="cityFilter" onchange="renderUniversities()"><option value="">Toutes les villes</option></select>
+<select id="fieldFilter" onchange="renderUniversities()"><option value="">Tous les domaines</option></select>
+</div>
+<div id="uniCount" class="count"></div>
+<div id="universityGrid" class="university-grid"></div>
+</section>
+
+<!-- IA -->
+<section id="ai" class="page">
+<div class="section-head">
+<span class="badge">CAPAVENIR AI</span>
+<h2>Ton assistant d'orientation</h2>
+<p>Pose une question sur les études, les filières ou ton orientation.</p>
+</div>
+<div class="ai-box">
+<div id="chat" class="chat">
+<div class="message bot">Bonjour ! Je suis <strong>CapAvenir AI</strong>. Je peux t'aider à réfléchir à ton orientation, aux filières, aux métiers, aux universités et aux instituts.<br><br><strong>Quelle est ta question ?</strong></div>
+</div>
+<div class="chat-input">
+<input id="aiInput" class="input" placeholder="Ex : J'aime l'informatique..." onkeydown="if(event.key==='Enter')sendAI()">
+<button class="btn btn-primary" onclick="sendAI()">Envoyer</button>
+</div>
+</div>
+</section>
+
+<!-- PROFIL -->
+<section id="profile" class="page">
+<div class="section-head">
+<span class="badge">👤 PROFIL ÉTUDIANT</span>
+<h2>Mon profil</h2>
+<p>Complète ton profil pour personnaliser ton expérience CapAvenir.</p>
+</div>
+<div class="profile-box">
+<div class="form-group"><label for="profileName">Nom complet</label><input id="profileName" class="input" placeholder="Ex : Jean Kabongo"></div>
+<div class="form-group"><label for="profileCity">Ville</label>
+<select id="profileCity"><option>Kinshasa</option><option>Lubumbashi</option><option>Goma</option><option>Bukavu</option><option>Kisangani</option><option>Matadi</option><option>Autre</option></select></div>
+<div class="form-group"><label for="profileOption">Option / Section</label><input id="profileOption" class="input" placeholder="Ex : Math-Physique"></div>
+<button class="btn btn-primary" onclick="saveProfile()">Enregistrer</button>
+<p id="profileMessage" style="margin-top:15px;color:var(--green);font-weight:700;"></p>
+</div>
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+<div class="modal-content">
+<button class="close" onclick="closeModal()" aria-label="Fermer">×</button>
+<div id="modalContent"></div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-inner">
+<div>
+<h3>🇨🇩 CapAvenir RDC</h3>
+<p>Une plateforme numérique destinée à aider les jeunes à mieux choisir leur parcours d'études et leur avenir professionnel.</p><br>
+<p>Construis ton avenir. Fais le bon choix.</p>
+</div>
+<div><h3>Explorer</h3><ul><li>Test Post-Bac</li><li>Mon orientation</li><li>Filières</li><li>Universités et instituts</li></ul></div>
+<div><h3>CapAvenir</h3><ul><li>Orientation</li><li>Études supérieures</li><li>Universités RDC</li><li>Instituts techniques</li></ul></div>
+</div>
+<div class="footer-bottom">🇨🇩 © 2026 CapAvenir RDC — Tous droits réservés.</div>
+</footer>
+
+<script>
+/* ================= DOMAINES ================= */
+const names={
+informatique:"Informatique & Numérique",
+sante:"Santé & Médecine",
+ingenierie:"Ingénierie & Sciences",
+droit:"Droit & Sciences politiques",
+gestion:"Économie, Gestion & Business",
+design:"Communication & Créativité",
+agro:"Agronomie & Environnement",
+mines:"Mines, Géologie & Énergie",
+education:"Éducation & Sciences humaines",
+sciences:"Sciences fondamentales",
+construction:"Construction, Architecture & BTP"
+};
+
+/* ================= FILIÈRES ================= */
+const fields={
+informatique:["Informatique","Développement logiciel","Cybersécurité","Intelligence artificielle","Data Science","Réseaux et télécoms","Systèmes d'information","Génie logiciel","Maintenance informatique"],
+sante:["Médecine","Sciences biomédicales","Pharmacie","Sciences infirmières","Santé publique","Techniques médicales (laboratoire, radiologie)","Nutrition","Kinésithérapie","Sages-femmes / Obstétrique"],
+ingenierie:["Génie civil","Génie électrique","Génie mécanique","Électronique","Énergies renouvelables","Télécommunications","Génie industriel"],
+droit:["Droit","Sciences politiques","Relations internationales","Administration publique","Droits humains","Diplomatie","Criminologie","Notariat et fiscalité"],
+gestion:["Gestion","Économie","Finance","Marketing","Entrepreneuriat","Comptabilité et audit","Commerce international","Banque et assurance","Logistique et transport","Gestion des ressources humaines"],
+design:["Communication","Marketing digital","Design graphique","Audiovisuel","Journalisme","Arts plastiques","Cinéma et photographie","Musique et arts du spectacle","Relations publiques","Architecture d'intérieur"],
+agro:["Agronomie","Médecine vétérinaire","Eaux et forêts","Développement rural","Environnement et climat"],
+mines:["Géologie","Génie des mines","Métallurgie","Pétrole et gaz","Hydrocarbures et énergie"],
+education:["Pédagogie","Psychologie","Sociologie","Langues et littératures","Histoire et géographie"],
+sciences:["Mathématiques","Physique","Chimie","Biologie","Statistique"],
+construction:["Architecture","Urbanisme et aménagement du territoire","Bâtiment et travaux publics (BTP)","Génie civil","Topographie / Géomètre","Conduite de travaux","Dessin technique et métrés","Hydraulique et assainissement","Architecture d'intérieur"]
+};
+
+const fieldInfo={
+informatique:{title:"Informatique & Numérique",text:"Technologie, programmation, données, réseaux, cybersécurité et intelligence artificielle."},
+sante:{title:"Santé & Médecine",text:"Sciences médicales, soins, recherche et accompagnement des patients."},
+ingenierie:{title:"Ingénierie & Sciences",text:"Conception, construction, énergie, électronique et résolution de problèmes techniques."},
+droit:{title:"Droit & Sciences politiques",text:"Justice, lois, gouvernance, administration et relations internationales."},
+gestion:{title:"Économie, Gestion & Business",text:"Finance, gestion, marketing, entrepreneuriat et développement des entreprises."},
+design:{title:"Communication & Créativité",text:"Design, communication, médias, marketing digital et création de contenus."},
+agro:{title:"Agronomie & Environnement",text:"Agriculture, élevage, forêts, sécurité alimentaire et protection de l'environnement."},
+mines:{title:"Mines, Géologie & Énergie",text:"Exploration, exploitation minière, géologie, métallurgie, pétrole et énergie."},
+education:{title:"Éducation & Sciences humaines",text:"Enseignement, psychologie, sociologie, langues, histoire et accompagnement des personnes."},
+sciences:{title:"Sciences fondamentales",text:"Mathématiques, physique, chimie, biologie et recherche scientifique."},
+construction:{title:"Construction, Architecture & BTP",text:"Concevoir et bâtir des maisons, routes, ponts et villes : architecture, urbanisme, bâtiment, travaux publics et topographie."}
+};
+
+const descriptions={
+informatique:"Ton profil montre une forte affinité avec la technologie, la logique et le numérique.",
+sante:"Ton profil montre un intérêt important pour les sciences, la santé et l'aide aux autres.",
+ingenierie:"Ton profil présente une bonne affinité avec les sciences, la logique et la résolution de problèmes.",
+droit:"Ton profil présente une forte capacité d'analyse, d'argumentation et un intérêt pour la justice.",
+gestion:"Ton profil montre un potentiel intéressant en leadership, organisation, économie et entrepreneuriat.",
+design:"Ton profil montre une forte créativité et une sensibilité à la communication et aux médias.",
+agro:"Ton profil montre un intérêt pour la nature, l'agriculture, l'élevage et le développement durable.",
+mines:"Ton profil montre une affinité avec les ressources naturelles, la géologie et les secteurs minier et énergétique.",
+education:"Ton profil montre un goût pour la transmission, l'écoute et la compréhension des personnes et de la société.",
+sciences:"Ton profil montre une forte curiosité scientifique, de la rigueur et un goût pour la recherche.",
+construction:"Ton profil montre un sens de l'espace, de la précision et un goût pour concevoir et bâtir des ouvrages concrets."
+};
+
+const skillsData={
+informatique:[["Logique",94],["Technologie",96],["Résolution de problèmes",90]],
+sante:[["Empathie",95],["Sciences",92],["Attention",90]],
+ingenierie:[["Logique",94],["Précision",92],["Résolution de problèmes",95]],
+droit:[["Analyse",94],["Argumentation",92],["Communication",90]],
+gestion:[["Leadership",94],["Organisation",91],["Entrepreneuriat",95]],
+design:[["Créativité",97],["Communication",94],["Imagination",96]],
+agro:[["Sens de la nature",94],["Observation",91],["Esprit pratique",93]],
+mines:[["Sens technique",93],["Endurance",90],["Analyse du terrain",92]],
+education:[["Pédagogie",95],["Écoute",93],["Communication",92]],
+sciences:[["Curiosité",96],["Rigueur",94],["Raisonnement",95]],
+construction:[["Sens de l'espace",95],["Précision",92],["Organisation de chantier",91]]
+};
+
+/* Correspondance domaine → domaines des établissements */
+const domainMapping={
+informatique:["Informatique"],
+sante:["Santé","Médecine"],
+ingenierie:["Ingénierie","Sciences et Technologies","Technique"],
+droit:["Droit"],
+gestion:["Gestion","Économie"],
+design:["Communication","Arts"],
+agro:["Agronomie","Vétérinaire"],
+mines:["Mines","Géologie"],
+education:["Éducation","Philosophie"],
+sciences:["Sciences et Technologies"],
+construction:["Construction"]
+};
+
+/* ================= ÉTABLISSEMENTS ================= */
+/* Les domaines sont indicatifs : à vérifier auprès de chaque établissement. */
+const universities=[
+/* Universités */
+{name:"Université de Kinshasa",short:"UNIKIN",city:"Kinshasa",type:"Université",fields:["Santé","Droit","Informatique","Ingénierie","Construction"],website:"https://www.unikin.ac.cd/"},
+{name:"Université Catholique du Congo",short:"UCC",city:"Kinshasa",type:"Université",fields:["Droit","Gestion","Économie"],website:""},
+{name:"Université Protestante au Congo",short:"UPC",city:"Kinshasa",type:"Université",fields:["Droit","Gestion","Informatique"],website:""},
+{name:"Université de Lubumbashi",short:"UNILU",city:"Lubumbashi",type:"Université",fields:["Ingénierie","Droit","Santé","Informatique","Construction"],website:""},
+{name:"Université de Kisangani",short:"UNIKIS",city:"Kisangani",type:"Université",fields:["Droit","Santé","Gestion","Informatique"],website:""},
+{name:"Université Officielle de Bukavu",short:"UOB",city:"Bukavu",type:"Université",fields:["Ingénierie","Droit","Informatique","Construction"],website:""},
+{name:"Université de Goma",short:"UNIGOM",city:"Goma",type:"Université",fields:["Gestion","Droit","Informatique","Ingénierie","Construction"],website:""},
+{name:"Université Évangélique en Afrique",short:"UEA",city:"Bukavu",type:"Université",fields:["Santé","Gestion","Informatique"],website:""},
+{name:"Université Révérend Kim",short:"URKIM",city:"Kinshasa",type:"Université",fields:["Informatique","Droit","Médecine","Gestion","Communication"],website:"https://unirevkim.ac.cd/"},
+{name:"Université Loyola du Congo",short:"ULC",city:"Kinshasa",type:"Université",fields:["Sciences et Technologies","Ingénierie","Gestion","Économie","Agronomie","Vétérinaire","Philosophie"],website:"https://uloyola.cd/"},
+{name:"Université Pédagogique Nationale",short:"UPN",city:"Kinshasa",type:"Université",fields:["Éducation","Philosophie","Sciences et Technologies"],website:""},
+{name:"Université Technologique Bel Campus",short:"UTBC",city:"Kinshasa",type:"Université",fields:["Informatique","Ingénierie","Technique","Gestion","Construction"],website:""},
+{name:"Université Nouveaux Horizons",short:"UNH",city:"Lubumbashi",type:"Université",fields:["Ingénierie","Gestion","Mines","Technique","Construction"],website:""},
+/* Instituts techniques */
+{name:"Institut Supérieur de Techniques Appliquées",short:"ISTA",city:"Kinshasa",type:"Institut technique",fields:["Technique","Ingénierie","Informatique","Construction"],website:""},
+{name:"Institut National du Bâtiment et des Travaux Publics",short:"INBTP",city:"Kinshasa",type:"Institut technique",fields:["Construction","Technique","Ingénierie"],website:""},
+{name:"Institut Supérieur d'Architecture et d'Urbanisme",short:"ISAU",city:"Kinshasa",type:"Institut technique",fields:["Construction","Technique","Ingénierie","Arts"],website:""},
+{name:"Institut Supérieur des Techniques Médicales",short:"ISTM",city:"Kinshasa",type:"Institut technique",fields:["Santé","Technique"],website:""},
+/* Instituts supérieurs */
+{name:"Institut Supérieur d'Informatique, Programmation et Analyse",short:"ISIPA",city:"Kinshasa",type:"Institut supérieur",fields:["Informatique","Technique"],website:""},
+{name:"Institut Supérieur Pédagogique de Gombe",short:"ISP-GOMBE",city:"Kinshasa",type:"Institut supérieur",fields:["Éducation"],website:""},
+{name:"Institut Supérieur de Commerce de Kinshasa",short:"ISC-KIN",city:"Kinshasa",type:"Institut supérieur",fields:["Gestion","Économie"],website:""},
+{name:"Institut Facultaire des Sciences de l'Information et de la Communication",short:"IFASIC",city:"Kinshasa",type:"Institut supérieur",fields:["Communication"],website:""},
+{name:"Académie des Beaux-Arts",short:"ABA",city:"Kinshasa",type:"Institut supérieur",fields:["Arts","Communication"],website:""},
+{name:"Institut National des Arts",short:"INA",city:"Kinshasa",type:"Institut supérieur",fields:["Arts","Communication"],website:""},
+{name:"Institut Supérieur de Commerce de Lubumbashi",short:"ISC-LSH",city:"Lubumbashi",type:"Institut supérieur",fields:["Gestion","Économie"],website:""},
+{name:"Institut Supérieur de Développement Rural de Bukavu",short:"ISDR-BKV",city:"Bukavu",type:"Institut supérieur",fields:["Agronomie","Éducation"],website:""},
+{name:"Institut Supérieur Pédagogique de Bukavu",short:"ISP-BKV",city:"Bukavu",type:"Institut supérieur",fields:["Éducation"],website:""}
+];
+
+/* ================= QUESTIONS ================= */
+const questions=[
+{text:"Quelle activité préfères-tu ?",answers:[
+["Créer une application ou un site web","informatique"],["Soigner ou aider une personne","sante"],["Construire ou concevoir une machine","ingenierie"],["Défendre quelqu'un ou analyser une loi","droit"],["Créer une entreprise","gestion"],["Créer une affiche ou une vidéo","design"],
+["Cultiver, élever ou protéger la nature","agro"],["Explorer le sol, les mines ou le pétrole","mines"],["Enseigner et transmettre un savoir","education"],["Faire des expériences scientifiques","sciences"],["Dessiner des plans ou construire des bâtiments","construction"]]},
+{text:"Quelle matière préfères-tu ?",answers:[
+["Informatique","informatique"],["Biologie","sante"],["Mathématiques / Physique","ingenierie"],["Histoire / Éducation civique","droit"],["Économie","gestion"],["Arts / Communication","design"],
+["Sciences de la vie et de la terre","agro"],["Géologie / Chimie","mines"],["Français / Pédagogie","education"],["Chimie / Mathématiques pures","sciences"],["Dessin technique / Mathématiques","construction"]]},
+{text:"Quel problème aimerais-tu résoudre ?",answers:[
+["Un problème technologique","informatique"],["Un problème de santé","sante"],["Un problème technique","ingenierie"],["Une injustice","droit"],["Un problème d'entreprise","gestion"],["Un problème de communication","design"],
+["Un problème d'alimentation ou d'environnement","agro"],["Un problème d'énergie ou de ressources","mines"],["Un problème d'éducation","education"],["Une question scientifique sans réponse","sciences"],["Un problème de logement ou d'infrastructures","construction"]]},
+{text:"Dans une équipe, quel rôle prends-tu naturellement ?",answers:[
+["Le technicien","informatique"],["La personne qui aide les autres","sante"],["Le spécialiste technique","ingenierie"],["Le défenseur des idées","droit"],["Le responsable","gestion"],["Le créatif","design"],
+["Celui qui connaît le terrain","agro"],["Celui qui travaille sur le terrain","mines"],["Celui qui explique aux autres","education"],["Celui qui cherche et vérifie","sciences"],["Celui qui organise le chantier","construction"]]},
+{text:"Quel métier t'attire le plus ?",answers:[
+["Développeur","informatique"],["Médecin","sante"],["Ingénieur","ingenierie"],["Avocat","droit"],["Entrepreneur","gestion"],["Designer","design"],
+["Agronome / Vétérinaire","agro"],["Géologue / Ingénieur des mines","mines"],["Enseignant / Psychologue","education"],["Chercheur / Chimiste","sciences"],["Architecte / Conducteur de travaux","construction"]]},
+{text:"Comment te décrirais-tu ?",answers:[
+["Logique","informatique"],["Empathique","sante"],["Précis","ingenierie"],["Analytique","droit"],["Leader","gestion"],["Créatif","design"],
+["Proche de la nature","agro"],["Courageux et endurant","mines"],["Patient et pédagogue","education"],["Curieux et méthodique","sciences"],["Organisé et pratique","construction"]]},
+{text:"Quel projet aimerais-tu réaliser ?",answers:[
+["Une application mobile","informatique"],["Une campagne de santé","sante"],["Une construction innovante","ingenierie"],["Un projet de justice","droit"],["Une startup","gestion"],["Une campagne média","design"],
+["Une ferme ou un projet agricole moderne","agro"],["Un projet d'exploitation ou d'énergie","mines"],["Une école ou un programme éducatif","education"],["Une découverte scientifique","sciences"],["Un bâtiment, une route ou un pont","construction"]]},
+{text:"Quelle qualité te correspond le mieux ?",answers:[
+["Curiosité technologique","informatique"],["Patience","sante"],["Rigueur","ingenierie"],["Argumentation","droit"],["Leadership","gestion"],["Imagination","design"],
+["Sens de l'observation","agro"],["Endurance","mines"],["Écoute","education"],["Esprit de recherche","sciences"],["Sens de l'espace","construction"]]},
+{text:"Quel environnement de travail préfères-tu ?",answers:[
+["Ordinateur / laboratoire numérique","informatique"],["Hôpital / laboratoire médical","sante"],["Chantier / laboratoire technique","ingenierie"],["Tribunal / administration","droit"],["Entreprise","gestion"],["Studio / agence média","design"],
+["Champ / ferme / forêt","agro"],["Site minier / terrain","mines"],["École / université","education"],["Laboratoire de recherche","sciences"],["Chantier / bureau d'études","construction"]]},
+{text:"Qu'est-ce qui te motive le plus ?",answers:[
+["Créer la technologie de demain","informatique"],["Sauver et améliorer des vies","sante"],["Construire des solutions","ingenierie"],["Défendre la justice","droit"],["Créer de la valeur","gestion"],["Inspirer par la créativité","design"],
+["Nourrir et protéger la planète","agro"],["Valoriser les richesses du sous-sol","mines"],["Former la prochaine génération","education"],["Comprendre comment le monde fonctionne","sciences"],["Bâtir la ville de demain","construction"]]}
+];
+
+let currentQuestion=0;
+let userAnswers=[];
+let orientationData=null;
+
+/* ================= NAVIGATION ================= */
+function toggleMenu(){document.getElementById("nav").classList.toggle("show")}
+
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+const page=document.getElementById(id);
+if(page)page.classList.add("active");
+window.scrollTo({top:0,behavior:"smooth"});
+document.getElementById("nav").classList.remove("show");
+if(id==="universities")renderUniversities();
+if(id==="fields")renderFields();
+if(id==="orientation")renderOrientation();
+}
+
+/* ================= TEST ================= */
+function loadQuestion(){
+const q=questions[currentQuestion];
+document.getElementById("questionNumber").innerText=`Question ${currentQuestion+1} / ${questions.length}`;
+document.getElementById("questionText").innerText=q.text;
+const answers=document.getElementById("answers");
+answers.innerHTML="";
+q.answers.forEach(a=>{
+const b=document.createElement("button");
+b.className="answer";
+b.innerText=a[0];
+if(userAnswers[currentQuestion]===a[1])b.classList.add("selected");
+b.onclick=()=>{
+userAnswers[currentQuestion]=a[1];
+document.querySelectorAll(".answer").forEach(x=>x.classList.remove("selected"));
+b.classList.add("selected");
+};
+answers.appendChild(b);
+});
+document.getElementById("progressBar").style.width=((currentQuestion/questions.length)*100)+"%";
+}
+
+function nextQuestion(){
+if(!userAnswers[currentQuestion]){alert("Veuillez sélectionner une réponse.");return;}
+if(currentQuestion<questions.length-1){currentQuestion++;loadQuestion();}
+else calculateResult();
+}
+
+function previousQuestion(){
+if(currentQuestion>0){currentQuestion--;loadQuestion();}
+}
+
+/* ================= CALCUL ================= */
+function calculateResult(){
+const scores={};
+Object.keys(names).forEach(k=>scores[k]=0);
+userAnswers.forEach(a=>{if(scores[a]!==undefined)scores[a]++;});
+const best=Object.keys(scores).sort((a,b)=>scores[b]-scores[a])[0];
+const percentage=Math.round((scores[best]/questions.length)*100);
+orientationData={domain:best,score:percentage,scores:scores,date:new Date().toLocaleDateString("fr-FR")};
+try{localStorage.setItem("capavenirOrientation",JSON.stringify(orientationData));}catch(e){}
+document.getElementById("progressBar").style.width="100%";
+document.getElementById("resultDomain").innerText=names[best];
+document.getElementById("resultScore").innerText=percentage+"%";
+document.getElementById("resultText").innerText=descriptions[best];
+const rec=document.getElementById("recommendations");
+rec.innerHTML="";
+fields[best].slice(0,3).forEach(f=>{rec.innerHTML+=`<div class="rec"><strong>Filière</strong>${f}</div>`;});
+renderOrientation();
+showPage("result");
+}
+
+/* ================= ORIENTATION ================= */
+function renderOrientation(){
+const container=document.getElementById("orientationContent");
+let saved=null;
+try{saved=localStorage.getItem("capavenirOrientation");}catch(e){}
+if(!saved){
+container.innerHTML=`<div class="empty"><h3>Ton orientation n'est pas encore définie</h3><p style="margin:12px 0 20px">Passe le test pour obtenir tes recommandations.</p><button class="btn btn-primary" onclick="showPage('test')">Commencer le test</button></div>`;
+return;
+}
+orientationData=JSON.parse(saved);
+const domain=orientationData.domain;
+if(!names[domain]){return;}
+const skills=skillsData[domain];
+container.innerHTML=`
+<div class="orientation-header">
+<div><span class="small-label">PROFIL CAPAVENIR</span><h1>${names[domain]}</h1><p>${descriptions[domain]}</p></div>
+<div class="orientation-score">${orientationData.score}%</div>
+</div>
+<div class="orientation-grid">
+<div class="card"><h3>Mes compétences</h3>
+${skills.map(s=>`<div class="skill"><div class="skill-top"><span>${s[0]}</span><span>${s[1]}%</span></div><div class="skill-bar"><div class="skill-fill" style="width:${s[1]}%"></div></div></div>`).join("")}
+</div>
+<div class="card"><h3>Mes filières recommandées</h3>
+${fields[domain].map(f=>`<div class="orientation-field"><strong>${f}</strong></div>`).join("")}
+</div>
+</div>
+<div class="card"><h3>Établissements recommandés</h3>
+<p style="margin-bottom:20px">Universités, instituts supérieurs et instituts techniques qui proposent des domaines correspondant à ton profil.</p>
+<div id="recommendedUniversities" class="university-grid"></div>
+</div>
+<div class="orientation-actions">
+<button class="btn btn-primary" onclick="showPage('test')">Refaire le test</button>
+<button class="btn btn-white" onclick="showPage('universities')">Tous les établissements</button>
+<button class="btn btn-red" onclick="showPage('ai')">Parler à l'IA</button>
+</div>`;
+renderRecommended(domain);
+}
+
+function renderRecommended(domain){
+const container=document.getElementById("recommendedUniversities");
+if(!container)return;
+let result=universities.filter(u=>u.fields.some(f=>domainMapping[domain].some(w=>f.toLowerCase().includes(w.toLowerCase()))));
+if(result.length===0)result=universities.filter(u=>u.city==="Kinshasa");
+container.innerHTML=result.slice(0,6).map(createUniversityCard).join("");
+}
+
+/* ================= ÉTABLISSEMENTS ================= */
+function initFilters(){
+const city=document.getElementById("cityFilter");
+[...new Set(universities.map(u=>u.city))].sort().forEach(c=>{city.innerHTML+=`<option>${c}</option>`;});
+const field=document.getElementById("fieldFilter");
+[...new Set(universities.flatMap(u=>u.fields))].sort((a,b)=>a.localeCompare(b,"fr")).forEach(f=>{field.innerHTML+=`<option>${f}</option>`;});
+}
+
+function renderUniversities(){
+const grid=document.getElementById("universityGrid");
+if(!grid)return;
+const search=document.getElementById("searchUniversity").value.toLowerCase().trim();
+const type=document.getElementById("typeFilter").value;
+const city=document.getElementById("cityFilter").value;
+const field=document.getElementById("fieldFilter").value;
+const result=universities.filter(u=>{
+const s=!search||u.name.toLowerCase().includes(search)||u.short.toLowerCase().includes(search)||u.type.toLowerCase().includes(search)||u.city.toLowerCase().includes(search)||u.fields.some(f=>f.toLowerCase().includes(search));
+return s&&(!type||u.type===type)&&(!city||u.city===city)&&(!field||u.fields.includes(field));
+});
+document.getElementById("uniCount").innerText=`${result.length} établissement${result.length>1?"s":""} trouvé${result.length>1?"s":""}`;
+if(result.length===0){
+grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><h3>Aucun établissement trouvé</h3><p>Essaie une autre recherche ou retire un filtre.</p></div>`;
+return;
+}
+grid.innerHTML=result.map(createUniversityCard).join("");
+}
+
+function coverClass(type){
+return type==="Institut technique"?"technique":type==="Institut supérieur"?"institut":"";
+}
+
+function createUniversityCard(u){
+return `
+<article class="university">
+<div class="uni-cover ${coverClass(u.type)}"><div class="uni-logo">${u.short}</div></div>
+<div class="uni-content">
+<h3>${u.name}</h3>
+<div class="location">${u.city}, RDC</div>
+<div class="tags">
+<span class="tag type">${u.type}</span>
+${u.fields.slice(0,5).map(f=>`<span class="tag">${f}</span>`).join("")}
+</div>
+<div class="uni-buttons">
+<button class="btn btn-primary" onclick="showUniversity('${u.short}')">Découvrir</button>
+${u.website?`<a class="btn btn-white" href="${u.website}" target="_blank" rel="noopener">Site officiel</a>`:""}
+</div>
+</div>
+</article>`;
+}
+
+/* ================= DÉTAIL ÉTABLISSEMENT ================= */
+function showUniversity(short){
+const u=universities.find(x=>x.short===short);
+if(!u)return;
+let extra="";
+if(u.short==="URKIM"){
+extra=`<div class="card" style="margin:20px 0;box-shadow:none;"><strong>Université Révérend Kim</strong><p style="margin-top:8px">L'URKIM comprend notamment des domaines liés aux Sciences Informatiques, au Droit, à la Médecine, aux Sciences économiques et de gestion et aux Communications sociales.</p></div>`;
+}
+if(u.short==="ULC"){
+extra=`<div class="card" style="margin:20px 0;box-shadow:none;"><strong>Université Loyola du Congo</strong><p style="margin-top:8px">L'ULC propose notamment des domaines en Sciences et Technologies, Économie et Gestion, Sciences agronomiques et vétérinaires et Philosophie.</p></div>`;
+}
+document.getElementById("modalContent").innerHTML=`
+<div style="text-align:center;margin-bottom:20px;"><div class="uni-logo" style="margin:auto">${u.short}</div></div>
+<h2 style="color:var(--dark);margin-bottom:8px;">${u.name}</h2>
+<p style="color:var(--muted);margin-bottom:20px;">${u.type} — ${u.city}, RDC</p>
+<h3>Domaines</h3>
+<div class="tags" style="margin-top:12px">${u.fields.map(f=>`<span class="tag">${f}</span>`).join("")}</div>
+${extra}
+<p style="color:var(--muted);font-size:13px;line-height:1.6;margin-top:10px">Les domaines sont indicatifs. Vérifie les filières, les conditions d'admission et les frais auprès de l'établissement.</p>
+${u.website?`<a href="${u.website}" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;margin-top:15px;">Visiter le site officiel</a>`:`<button class="btn btn-white" style="width:100%;margin-top:15px" onclick="closeModal()">Fermer</button>`}`;
+document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+
+/* ================= FILIÈRES ================= */
+function renderFields(){
+const grid=document.getElementById("fieldGrid");
+if(!grid)return;
+grid.innerHTML=Object.keys(fieldInfo).map(d=>{
+const info=fieldInfo[d];
+return `<div class="field-card"><h3>${info.title}</h3><p>${info.text}</p>
+<div class="tags">${fields[d].slice(0,4).map(f=>`<span class="tag">${f}</span>`).join("")}${fields[d].length>4?`<span class="tag">+${fields[d].length-4}</span>`:""}</div>
+<button class="btn btn-primary" onclick="showField('${d}')">Voir les filières</button></div>`;
+}).join("");
+}
+
+function showField(domain){
+const info=fieldInfo[domain];
+const matches=universities.filter(u=>u.fields.some(f=>domainMapping[domain].some(w=>f.toLowerCase().includes(w.toLowerCase()))));
+document.getElementById("modalContent").innerHTML=`
+<h2 style="color:var(--dark);margin-bottom:10px;">${info.title}</h2>
+<p style="color:var(--muted);line-height:1.7;margin-bottom:20px;">${info.text}</p>
+<h3>Filières possibles</h3>
+<div class="tags" style="margin-top:15px">${fields[domain].map(f=>`<span class="tag">${f}</span>`).join("")}</div>
+<h3>Établissements qui proposent ce domaine</h3>
+<div class="tags" style="margin-top:15px">${matches.length?matches.map(u=>`<span class="tag type">${u.short}</span>`).join(""):"<span class='tag'>Aucun établissement listé pour le moment</span>"}</div>
+<button class="btn btn-primary" style="width:100%;margin-top:20px;" onclick="closeModal()">Fermer</button>`;
+document.getElementById("modal").classList.add("show");
+}
+
+/* ================= IA ================= */
+function sendAI(){
+const input=document.getElementById("aiInput");
+const text=input.value.trim();
+if(!text)return;
+addMessage(escapeHTML(text),"user");
+input.value="";
+setTimeout(()=>addMessage(generateAIResponse(text),"bot"),500);
+}
+
+function escapeHTML(s){
+return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function addMessage(text,type){
+const chat=document.getElementById("chat");
+const m=document.createElement("div");
+m.className="message "+type;
+m.innerHTML=text;
+chat.appendChild(m);
+chat.scrollTop=chat.scrollHeight;
+}
+
+function has(t,words){return words.some(w=>t.includes(w));}
+
+function generateAIResponse(text){
+const t=text.toLowerCase();
+
+if(has(t,["institut","technique","ista","inbtp"])){
+return `Les instituts supérieurs et techniques (ISTA, INBTP, ISAU, ISIPA, ISTM...) forment à des métiers précis.<br><br>Tape « institut » ou « technique » dans la recherche de l'onglet Universités pour les voir.`;
+}
+if(has(t,["informatique","programm","développeur","developpeur"])){
+return `Si tu aimes l'informatique, tu peux explorer le développement logiciel, la cybersécurité, les réseaux, la Data Science ou l'intelligence artificielle.<br><br>Regarde aussi l'ISIPA, l'ISTA et l'UTBC, puis passe le Test Post-Bac.`;
+}
+if(has(t,["médec","medec","santé","sante","docteur","infirm","pharmac"])){
+return `Si tu es attiré par la santé, tu peux explorer Médecine, Pharmacie, Sciences infirmières, Santé publique ou les Techniques médicales (ISTM).<br><br>La rigueur, l'empathie et l'intérêt pour les sciences sont importants.`;
+}
+if(has(t,["droit","avocat","justice","diplomat"])){
+return `Le droit peut te convenir si tu aimes analyser, argumenter et comprendre les règles de la société.<br><br>Tu peux explorer le Droit, les Sciences politiques, la Diplomatie ou les Relations internationales.`;
+}
+if(has(t,["gestion","business","entreprise","entrepreneur","comptab","commerce","banque"])){
+return `Pour le business, explore la Gestion, l'Économie, la Finance, la Comptabilité, le Commerce ou l'Entrepreneuriat.<br><br>Les instituts supérieurs de commerce (ISC) sont aussi une piste.`;
+}
+if(has(t,["btp","construction","architect","urbanis","chantier","topograph","maçon","macon","travaux publics"])){
+return `La construction regroupe l'Architecture, l'Urbanisme, le BTP, le Génie civil et la Topographie.<br><br>Regarde l'ISAU (architecture et urbanisme), l'INBTP (bâtiment et travaux publics) et l'ISTA, ou filtre les établissements par domaine « Construction ».`;
+}
+if(has(t,["ingénieur","ingenieur","génie","genie"])){
+return `L'ingénierie comprend le génie civil, électrique, mécanique, l'électronique et l'énergie.<br><br>Regarde l'ISTA, l'UTBC et les universités qui proposent l'Ingénierie.`;
+}
+if(has(t,["design","graphique","communication","créatif","creatif","journal","art"])){
+return `Tu peux explorer le design graphique, la communication, le marketing digital, l'audiovisuel, le journalisme ou les arts.<br><br>Regarde l'IFASIC, l'Académie des Beaux-Arts et l'Institut National des Arts.`;
+}
+if(has(t,["agricul","agro","vétérin","veterin","environnement","ferme","élevage","elevage"])){
+return `Tu peux explorer l'Agronomie, la Médecine vétérinaire, les Eaux et forêts ou le Développement rural.<br><br>Regarde l'ISDR de Bukavu et l'Université Loyola du Congo.`;
+}
+if(has(t,["mine","géolog","geolog","pétrole","petrole","énergie","energie"])){
+return `Les Mines et la Géologie sont de grands secteurs en RDC : Géologie, Génie des mines, Métallurgie, Pétrole et énergie.<br><br>Filtre les établissements par domaine « Mines » ou « Technique ».`;
+}
+if(has(t,["enseign","professeur","psycholog","pédagog","pedagog","sociolog"])){
+return `Pour l'enseignement et les sciences humaines, regarde la Pédagogie, la Psychologie, la Sociologie ou les Langues.<br><br>L'UPN et les ISP sont des pistes à explorer.`;
+}
+if(has(t,["chimie","physique","mathém","mathem","recherche","biologie","statist"])){
+return `Si tu aimes les sciences, explore les Mathématiques, la Physique, la Chimie, la Biologie ou la Statistique.<br><br>Passe le Test Post-Bac pour voir si ce domaine ressort.`;
+}
+return `Bonne question.<br><br>Pour une recommandation personnalisée, commence par passer le <strong>Test Post-Bac</strong>.<br><br>Ensuite, ouvre <strong>Mon orientation</strong> pour découvrir tes recommandations.`;
+}
+
+/* ================= PROFIL ================= */
+function saveProfile(){
+const profile={
+name:document.getElementById("profileName").value,
+city:document.getElementById("profileCity").value,
+option:document.getElementById("profileOption").value
+};
+try{localStorage.setItem("capavenirProfile",JSON.stringify(profile));}catch(e){}
+document.getElementById("profileMessage").innerText="Profil enregistré avec succès.";
+}
+
+function loadProfile(){
+let saved=null;
+try{saved=localStorage.getItem("capavenirProfile");}catch(e){}
+if(!saved)return;
+const p=JSON.parse(saved);
+document.getElementById("profileName").value=p.name||"";
+document.getElementById("profileCity").value=p.city||"Kinshasa";
+document.getElementById("profileOption").value=p.option||"";
+}
+
+/* ================= INITIALISATION ================= */
+document.addEventListener("DOMContentLoaded",()=>{
+initFilters();
+loadQuestion();
+renderFields();
+renderUniversities();
+loadProfile();
+renderOrientation();
+});
+
+document.getElementById("modal").addEventListener("click",function(e){
+if(e.target===this)closeModal();
+});
+</script>
+</body>
+</html>
